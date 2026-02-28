@@ -1,95 +1,146 @@
-# 👋 Hi, I'm Shreyansh Jain
+<!-- ================= HEADER ================= -->
 
-🎓 BCA Student | 💻 Tech Enthusiast | 🔐 Cybersecurity Learner | 📊 Data & Programming Explorer
+<h1 align="center">Hi 👋, I'm Shreyansh Jain</h1>
+<h3 align="center">🚀 Aspiring Software Developer | 🔐 Cybersecurity Learner | 💻 Tech Enthusiast</h3>
 
-Welcome to my GitHub! I am a motivated Computer Applications student passionate about technology, problem-solving, and continuous learning. I enjoy working on projects that combine programming, data, and cybersecurity concepts to create practical solutions.
+<p align="center">
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=550&lines=Welcome+to+my+GitHub+Profile!;Future+Software+Developer;Cybersecurity+Enthusiast;Always+Learning+New+Technologies" />
+</p>
+
+<p align="center">
+<a href="mailto:jshreyansh962@gmail.com">
+<img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
+</a>
+<a href="#">
+<img src="https://img.shields.io/badge/Portfolio-Coming_Soon-blue?style=for-the-badge"/>
+</a>
+<a href="#">
+<img src="https://img.shields.io/badge/Resume-Download-green?style=for-the-badge"/>
+</a>
+</p>
 
 ---
 
-## 🚀 About Me
+# 🚀 About Me
 
-* 🎓 Bachelor of Computer Applications (BCA) — MAIMS, GGSIPU (2025–2028)
-* 🔐 Learning Cybersecurity through platforms like TryHackMe & Hack The Box
-* 📊 Interested in Data Analysis, Programming, and Emerging Technologies
-* 🧠 Currently improving skills in Python, SQL, and Networking fundamentals
-* 🎯 Goal: Become a skilled Software Developer / Cybersecurity Professional
+🎓 BCA Student at **MAIMS, GGSIPU (2025–2028)**
+🔐 Learning Cybersecurity via TryHackMe & Hack The Box
+💻 Passionate about Programming, Data, and Technology
+📈 Currently improving Python, SQL, Networking & Security Skills
+🎯 Goal: Software Developer / Cybersecurity Professional
 
 ---
 
-## 🛠️ Technical Skills
+# 🛠️ Tech Stack
 
-### 👨‍💻 Programming
+## 👨‍💻 Programming Languages
 
-* Python
-* C
+<p>
+<img src="https://skillicons.dev/icons?i=python,c" />
+</p>
 
-### 🗄️ Database
+## 🌐 Technologies & Tools
 
-* SQL
+<p>
+<img src="https://skillicons.dev/icons?i=git,github,vscode,mysql,linux" />
+</p>
 
-### ⚙️ Tools & Technologies
+## 📊 Other Skills
 
-* Git & GitHub
+* Networking Fundamentals
+* Cybersecurity Basics
 * MS Excel, PowerPoint, Word
-* Canva
-* Networking Basics
-* Cybersecurity Fundamentals
+* Canva & Digital Tools
 * Generative AI Tools
 
 ---
 
-## 📂 Projects
+# 🧠 Currently Learning
 
-🔹 Coming Soon — Currently building projects to upload here
+<p>
+<img src="https://skillicons.dev/icons?i=python,mysql,linux,github" />
+</p>
 
-Planned project areas:
-
-* Python automation tools
-* SQL database projects
-* Cybersecurity labs & write-ups
-* Data analysis mini projects
-
----
-
-## 📜 Certifications
-
-* Introduction to Cyber Security — Cisco Networking Academy
-* Career Essentials in Data Analysis — Microsoft & LinkedIn Learning
-* Digital Productivity — NIIT Foundation (UNICEF)
+* Cybersecurity Tools
+* Database Management
+* Python Development
+* Networking Concepts
 
 ---
 
-## 🏆 Experience
+# 📂 Featured Projects
+
+🚧 Projects are being actively developed and uploaded.
+
+### Planned Project Domains
+
+🔹 Python Automation Tools
+🔹 SQL Database Systems
+🔹 Cybersecurity Labs & Writeups
+🔹 Data Analysis Projects
+
+---
+
+# 📜 Certifications
+
+🏅 Introduction to Cyber Security — Cisco Networking Academy
+🏅 Career Essentials in Data Analysis — Microsoft & LinkedIn Learning
+🏅 Digital Productivity — NIIT Foundation (UNICEF)
+
+---
+
+# 🏆 Experience
 
 **Internship — K.G.S.V & Co., Chartered Accountants**
 
-* Assisted with IT tasks and presentations
-* Worked on digital content creation
-* Gained exposure to cybersecurity fundamentals
+* Assisted with IT presentations and digital work
+* Supported content creation tasks
+* Learned cybersecurity fundamentals
 
 ---
 
-## 🌱 Currently Learning
+# 📈 GitHub Analytics
 
-* Cybersecurity Tools & Concepts
-* Python Development
-* Database Management
-* Networking
+<p align="center">
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=sj-builds&show_icons=true&theme=tokyonight" />
+<img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=sj-builds&theme=tokyonight" />
+</p>
 
----
-
-## 📈 GitHub Stats
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=sj-builds\&show_icons=true\&theme=tokyonight)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=sj-builds\&layout=compact\&theme=tokyonight)
+<p align="center">
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=sj-builds&layout=compact&theme=tokyonight" />
+</p>
 
 ---
 
-## 📫 Connect With Me
+# 🐍 Contribution Snake
 
-📧 Email: [jshreyansh962@gmail.com](mailto:jshreyansh962@gmail.com)
-📍 New Delhi, India
+<p align="center">
+<img src="https://raw.githubusercontent.com/sj-builds/sj-builds/output/github-contribution-grid-snake.svg" />
+</p>
+
+---
+
+# 🌐 Connect With Me
+
+<p align="center">
+<a href="mailto:jshreyansh962@gmail.com">
+<img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
+</a>
+</p>
+
+---
+
+# 👀 Profile Views
+
+<p align="center">
+<img src="https://komarev.com/ghpvc/?username=sj-builds&label=Profile%20Views&color=blue&style=flat" />
+</p>
+
+---
+
+# ⭐ Quote I Believe In
+
+> “Consistency beats talent when talent doesn’t work hard.”
 
 ---
 
