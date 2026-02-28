@@ -102,12 +102,12 @@
 # 📈 GitHub Analytics
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=sj-builds&show_icons=true&theme=tokyonight&cache_seconds=86400" />
-<img src="https://streak-stats.demolab.com?user=sj-builds&theme=tokyonight&cache_seconds=86400" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=sj-builds&theme=tokyonight" />
 </p>
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=sj-builds&layout=compact&theme=tokyonight&cache_seconds=86400" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=sj-builds&theme=tokyonight" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=sj-builds&theme=tokyonight" />
 </p>
 
 ---
