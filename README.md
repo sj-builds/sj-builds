@@ -14,8 +14,9 @@
 <a href="#">
 <img src="https://img.shields.io/badge/Portfolio-Coming_Soon-blue?style=for-the-badge"/>
 </a>
-<a href="#">
-<img src="https://img.shields.io/badge/Resume-Download-green?style=for-the-badge"/>
+
+<a href="https://raw.githubusercontent.com/sj-builds/sj-builds/main/Shreyansh_Jain_Resume.pdf">
+<img src="https://img.shields.io/badge/📄_Resume-Download-green?style=for-the-badge&logo=adobeacrobatreader&logoColor=white"/>
 </a>
 </p>
 
