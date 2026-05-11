@@ -11,8 +11,8 @@
 <a href="mailto:jshreyansh962@gmail.com">
 <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
 </a>
-<a href="#">
-<img src="https://img.shields.io/badge/Portfolio-Coming_Soon-blue?style=for-the-badge"/>
+<a href="https://sj-builds-shreyansh-portfolio.vercel.app">
+<img src="https://img.shields.io/badge/Portfolio-View-blue?style=for-the-badge"/>
 </a>
 
 <a href="https://raw.githubusercontent.com/sj-builds/sj-builds/main/Shreyansh_Jain_Resume.pdf">
