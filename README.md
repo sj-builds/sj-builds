@@ -11,7 +11,7 @@
 <a href="mailto:jshreyansh962@gmail.com">
 <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
 </a>
-<a href="https://sj-builds-shreyansh-portfolio.vercel.app">
+<a href="https://shreyanshjain-portfolio.vercel.app">
 <img src="https://img.shields.io/badge/Portfolio-View-blue?style=for-the-badge"/>
 </a>
 
