@@ -1,30 +1,200 @@
-name: Generate Snake
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║           GitHub Contribution Snake — Production Workflow                  ║
+# ║           Target user : <USERNAME>                                         ║
+# ║           Generator   : Platane/snk@v3                                     ║
+# ║           Outputs     : github-contribution-grid-snake.svg        (light)  ║
+# ║                         github-contribution-grid-snake-dark.svg   (dark)   ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
 
+name: 🐍 Generate Contribution Snake
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Triggers
+#   • schedule  — regenerates every hour (UTC) to keep the graph fresh
+#   • push      — regenerates immediately on every push to main / master
+#   • workflow_dispatch — allows one-click manual regeneration from the Actions
+#                         tab (useful after GitHub contribution graph rebuilds)
+# ──────────────────────────────────────────────────────────────────────────────
 on:
-schedule:
-- cron: "0 */6 * * *"
-workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"   # every hour, on the hour
 
+  push:
+    branches:
+      - main
+      - master
+
+  workflow_dispatch:        # manual trigger — no additional inputs required
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Concurrency guard
+#   If a new run is triggered while one is already in progress, cancel the
+#   older run so only the latest graph state is ever published.
+# ──────────────────────────────────────────────────────────────────────────────
+concurrency:
+  group: snake-${{ github.ref }}
+  cancel-in-progress: true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Least-privilege permissions
+#   contents:write  — needed to push SVGs to the output branch
+#   No other permissions are granted.
+# ──────────────────────────────────────────────────────────────────────────────
 permissions:
-contents: write
+  contents: write
 
 jobs:
-generate:
-runs-on: ubuntu-latest
+  generate-snake:
+    name: Generate & Publish Snake SVGs
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Generate contribution snake
-    uses: Platane/snk@v3
-    with:
-      github_user_name: sj-builds
-      outputs: |
-        dist/github-contribution-grid-snake.svg
-        dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#00F7FF&color_dots=#161B22,#0E4429,#006D32,#26A641,#39D353
+    # Prevent runaway jobs; snake generation typically completes in < 2 min
+    timeout-minutes: 10
 
-  - name: Deploy to output branch
-    uses: crazy-max/ghaction-github-pages@v3
-    with:
-      target_branch: output
-      build_dir: dist
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 1. Checkout
+      #    A minimal shallow clone is enough — we only need the workflow file
+      #    itself; the SVGs are pushed directly to the output branch later.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 2. Generate — Light theme
+      #    Palette is tuned for GitHub's default (light) README rendering.
+      #    Color meanings:
+      #      color_snake   — snake body gradient start / end colours
+      #      color_dots    — contribution cell fill colours (level 0 → 4)
+      #      color_empty   — empty cell (no contributions)
+      #      color_filled  — highest-activity cell
+      #    Both SVGs are written to ./dist/ so a single push step covers both.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: 🌞 Generate light-theme snake SVG
+        uses: Platane/snk@v3
+        with:
+          github_user_name: <USERNAME>
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+          # Light palette — soft greens on a white/grey grid
+          # Customise the six hex values below to retheme without touching
+          # any other part of the workflow.
+          color_snake: "#4CAF50"
+          color_dots: "#ebedf0,#9be9a8,#40c463,#30a14e,#216e39"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 3. Generate — Dark theme (premium palette)
+      #    Colours are chosen for maximum contrast on GitHub's dark mode and
+      #    on dark README badges / profile pages.
+      #    The snake uses a vivid cyan-to-teal gradient; cells progress from
+      #    near-black through electric-green so even sparse graphs pop.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: 🌙 Generate dark-theme snake SVG
+        uses: Platane/snk@v3
+        with:
+          github_user_name: <USERNAME>
+          outputs: |
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+          # Dark palette — electric teal snake, deep-space background
+          color_snake: "#00FFDD"
+          color_dots: "#0d1117,#003d30,#006d5b,#00b894,#00FFDD"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 4. Verify artefacts
+      #    Fail fast with a clear message if either SVG is missing or empty
+      #    before we attempt to push anything to the output branch.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: ✅ Verify generated SVGs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_svg() {
+            local file="$1"
+            if [[ ! -f "$file" ]]; then
+              echo "::error::Expected SVG not found: $file"
+              exit 1
+            fi
+            local size
+            size=$(stat -c%s "$file")
+            if [[ "$size" -lt 512 ]]; then
+              echo "::error::SVG appears empty or corrupt (${size} bytes): $file"
+              exit 1
+            fi
+            echo "::notice::✔ $file — ${size} bytes"
+          }
+
+          check_svg dist/github-contribution-grid-snake.svg
+          check_svg dist/github-contribution-grid-snake-dark.svg
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 5. Publish to output branch
+      #    • Target branch : output   (create it automatically if absent)
+      #    • Force-push is intentional — we always want the latest graph state,
+      #      not an ever-growing commit history of SVG diffs.
+      #    • The orphan-branch approach keeps your main branch history clean.
+      #    • Cache headers embedded in the commit message signal CDNs / proxies
+      #      to treat the files as short-lived, so profile visitors always see
+      #      a fresh snake without hard-refreshing.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: 🚀 Publish SVGs to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+          # Commit as a neutral bot identity to keep author history clean
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit_message: "chore(snake): regenerate contribution snake [skip ci]"
+          # Force-push so the output branch stays a single-commit snapshot
+          # rather than accumulating thousands of tiny SVG-diff commits.
+          fqdn: ""          # no custom domain required
+          jekyll: false     # plain static files — Jekyll is unnecessary overhead
+          keep_history: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ────────────────────────────────────────────────────────────────────────
+      # 6. Summary
+      #    Print a job summary with ready-to-paste Markdown snippets so you
+      #    (or contributors) can immediately add the snake to a README.
+      # ────────────────────────────────────────────────────────────────────────
+      - name: 📋 Write job summary
+        if: success()
+        shell: bash
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## 🐍 Snake SVGs published successfully
+
+          Add **one** of the snippets below to your `README.md`:
+
+          ### Auto-switching (light + dark)
+          ```md
+          <picture>
+            <source
+              media="(prefers-color-scheme: dark)"
+              srcset="https://raw.githubusercontent.com/<USERNAME>/output/github-contribution-grid-snake-dark.svg"
+            />
+            <img
+              alt="GitHub contribution snake animation"
+              src="https://raw.githubusercontent.com/<USERNAME>/output/github-contribution-grid-snake.svg"
+            />
+          </picture>
+          ```
+
+          ### Light only
+          ```md
+          ![snake](https://raw.githubusercontent.com/<USERNAME>/output/github-contribution-grid-snake.svg)
+          ```
+
+          ### Dark only
+          ```md
+          ![snake](https://raw.githubusercontent.com/<USERNAME>/output/github-contribution-grid-snake-dark.svg)
+          ```
+          EOF
