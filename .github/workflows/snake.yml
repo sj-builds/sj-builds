@@ -1,28 +1,19 @@
-# ╔════════════════════════════════════════════════════════════════════════════════╗
+# ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║           GitHub Contribution Snake — Production Workflow                  ║
-# ║           Generator   : Platane/snk@v3                                     ║
-# ║           Outputs     : github-contribution-grid-snake.svg        (light)  ║
-# ║                         github-contribution-grid-snake-dark.svg   (dark)   ║
-# ╚════════════════════════════════════════════════════════════════════════════════╝
-#
-# ⚠️  BEFORE COMMITTING: replace sj-builds (4 occurrences below) with your
-#     real GitHub username, e.g.  shreyansh-profile  or  john-doe
-#
-# NOTE on Platane/snk@v3 inputs:
-#   Valid inputs are ONLY: github_user_name, github_token, outputs, args
-#   Color customisation is done via query-string params on each output path.
-#   DO NOT add color_snake / color_dots as top-level `with:` keys — they
-#   are silently ignored (you'll see a Warning in the logs) and the action
-#   will still use its built-in defaults.
+# ║           User       : sj-builds                                           ║
+# ║           Generator  : Platane/snk@v3                                      ║
+# ║           Outputs    : github-contribution-grid-snake.svg        (light)   ║
+# ║                        github-contribution-grid-snake-dark.svg   (dark)    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
 
 name: 🐍 Generate Contribution Snake
 
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Triggers
 #   • schedule          — regenerates every hour (UTC)
 #   • push              — regenerates immediately on push to main / master
 #   • workflow_dispatch — one-click manual run from the Actions tab
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 on:
   schedule:
     - cron: "0 * * * *"
@@ -34,18 +25,18 @@ on:
 
   workflow_dispatch:
 
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Concurrency: cancel any in-progress run for the same ref so we always
 # publish the most up-to-date graph state.
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 concurrency:
   group: snake-${{ github.ref }}
   cancel-in-progress: true
 
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Least-privilege permissions — only write access to repository contents
 # (needed to push the SVGs to the output branch).
-# ────────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 permissions:
   contents: write
 
@@ -57,31 +48,24 @@ jobs:
 
     steps:
 
-      # ──────────────────────────────────────────────────────────────────────────
-      # 1. Checkout — shallow clone is sufficient; we only need the workflow.
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
+      # 1. Checkout — shallow clone; we only need the workflow file itself.
+      #    Using @v4.2.2+ which runs on Node.js 22 (no deprecation warning).
+      # ────────────────────────────────────────────────────────────────────────
       - name: 📥 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 1
 
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
       # 2. Generate BOTH SVGs in a single Platane/snk@v3 call.
       #
-      #    Color customisation for snk@v3 must be embedded as query-string
-      #    parameters on each output path — NOT as separate `with:` inputs.
+      #    Color customisation for snk@v3 is done via query-string parameters
+      #    on each output path — NOT as separate `with:` keys.
       #
-      #    Supported query-string keys (snk@v3 / snk-action):
-      #      palette          — named palette  (e.g. github-dark)
-      #      color_snake      — snake colour   (hex, no #)
-      #      color_dots       — 5 comma-separated hex cell colours (lvl 0→4)
-      #      color_empty      — empty-cell background colour
-      #
-      #    Light palette  : soft GitHub greens on a white/grey background
-      #    Dark palette   : electric cyan snake on a deep-space background,
-      #                     using the built-in "github-dark" named palette as
-      #                     the base so the cell grid matches GitHub dark mode.
-      # ──────────────────────────────────────────────────────────────────────────
+      #    Light : GitHub default greens, white/grey background
+      #    Dark  : built-in "github-dark" named palette (matches GitHub UI)
+      # ────────────────────────────────────────────────────────────────────────
       - name: 🐍 Generate snake SVGs (light + dark)
         uses: Platane/snk@v3
         with:
@@ -92,10 +76,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ──────────────────────────────────────────────────────────────────────────
-      # 3. Verify — fail fast with a clear message if either SVG is missing
-      #    or suspiciously small before we push anything to the output branch.
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
+      # 3. Verify — fail fast if either SVG is missing or suspiciously small.
+      # ────────────────────────────────────────────────────────────────────────
       - name: ✅ Verify generated SVGs
         shell: bash
         run: |
@@ -119,27 +102,31 @@ jobs:
           check_svg dist/github-contribution-grid-snake.svg
           check_svg dist/github-contribution-grid-snake-dark.svg
 
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
       # 4. Publish — push both SVGs to an orphan `output` branch.
+      #
+      #    crazy-max/ghaction-github-pages@v4 valid inputs:
+      #      target_branch, build_dir, absolute_build_dir, keep_history,
+      #      allow_empty_commit, fqdn, jekyll, repo, dry_run
+      #
+      #    NOTE: commit_author is NOT a valid input for this action — omitted.
       #    keep_history: false  → force-push a single-commit snapshot so the
       #    branch never accumulates thousands of trivial SVG-diff commits.
-      #    jekyll: false        → plain static files, no Jekyll overhead.
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
       - name: 🚀 Publish SVGs to output branch
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@v4.0.0
         with:
           target_branch: output
           build_dir: dist
-          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-          commit_message: "chore(snake): regenerate contribution snake [skip ci]"
           keep_history: false
+          allow_empty_commit: false
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ──────────────────────────────────────────────────────────────────────────
-      # 5. Job summary — ready-to-paste README snippets printed after each run.
-      # ──────────────────────────────────────────────────────────────────────────
+      # ────────────────────────────────────────────────────────────────────────
+      # 5. Job summary — ready-to-paste README snippets after each run.
+      # ────────────────────────────────────────────────────────────────────────
       - name: 📋 Write job summary
         if: success()
         shell: bash
