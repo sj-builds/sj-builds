@@ -34,11 +34,22 @@ concurrency:
   cancel-in-progress: true
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Least-privilege permissions — only write access to repository contents
-# (needed to push the SVGs to the output branch).
+# Least-privilege permissions — only write access to repository contents.
 # ──────────────────────────────────────────────────────────────────────────────
 permissions:
   contents: write
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Node.js 24 opt-in (job-level env)
+#   actions/checkout and crazy-max/ghaction-github-pages currently bundle
+#   Node.js 20 internally. GitHub will force Node 24 as the default on
+#   June 16 2026 and remove Node 20 on September 16 2026.
+#   Setting FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true opts in now so the
+#   warning is silenced and the workflow is future-proof.
+#   Reference: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+# ──────────────────────────────────────────────────────────────────────────────
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   generate-snake:
@@ -50,7 +61,6 @@ jobs:
 
       # ────────────────────────────────────────────────────────────────────────
       # 1. Checkout — shallow clone; we only need the workflow file itself.
-      #    Using @v4.2.2+ which runs on Node.js 22 (no deprecation warning).
       # ────────────────────────────────────────────────────────────────────────
       - name: 📥 Checkout repository
         uses: actions/checkout@v4.2.2
@@ -104,14 +114,7 @@ jobs:
 
       # ────────────────────────────────────────────────────────────────────────
       # 4. Publish — push both SVGs to an orphan `output` branch.
-      #
-      #    crazy-max/ghaction-github-pages@v4 valid inputs:
-      #      target_branch, build_dir, absolute_build_dir, keep_history,
-      #      allow_empty_commit, fqdn, jekyll, repo, dry_run
-      #
-      #    NOTE: commit_author is NOT a valid input for this action — omitted.
-      #    keep_history: false  → force-push a single-commit snapshot so the
-      #    branch never accumulates thousands of trivial SVG-diff commits.
+      #    keep_history: false  → force-push a single-commit snapshot.
       # ────────────────────────────────────────────────────────────────────────
       - name: 🚀 Publish SVGs to output branch
         uses: crazy-max/ghaction-github-pages@v4.0.0
