@@ -136,16 +136,6 @@ Currently exploring and improving knowledge in:
 
 ---
 
-# 📈 GitHub Analytics
-
-<p align="center">
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=sj-builds&theme=tokyonight"/>
-
-</p>
-
----
-
 # 🔐 Cybersecurity Learning
 
 ```txt
